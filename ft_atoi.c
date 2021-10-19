@@ -48,12 +48,3 @@ int	ft_atoi(const char *s)
 	}
 	return (n);
 }
-
-// #include <stdio.h>
-// int main()
-// {
-// 	const char c[] = "-777777777777777";
-// 	printf("%d\n", ft_atoi(c));
-// 	printf("%d\n", atoi(c));
-// 	return(0);
-// }
