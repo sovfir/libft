@@ -12,28 +12,48 @@
 
 #include "libft.h"
 
-int	ft_atoi(const char	*str)
+static char	*ft_ispace(const char *s)
 {
-	long			res;
-	long			sign;
-	unsigned int	i;
-
-	res = 0;
-	sign = 1;
-	i = 0;
-	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'
-		|| str[i] == '\r' || str[i] == '\v' || str[i] == '\f')
-		i++;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			sign = -1;
-		i++;
-	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		res = res * 10 + (str[i] - '0');
-		i++;
-	}
-	return ((int)(sign * res));
+	while (((*s == ' ') || (*s == '\t') || (*s == '\n')
+			 || (*s == '\v') || (*s == '\f') || (*s == '\r')))
+		s++;
+	return ((char *)s);
 }
+
+int	ft_atoi(const char *s)
+{
+	int			sign;
+	long int	n;
+	long int	prev;
+
+	n = 0;
+	sign = 1;
+	s = ft_ispace(s);
+	if (*s == '-')
+	{
+		sign = -1;
+		s++;
+	}
+	else if (*s == '+')
+		s++;
+	while (*s >= '0' && *s <= '9')
+	{
+		prev = n;
+		n = n * 10 + sign * (*s - '0');
+		if (sign == 1 && prev > n)
+			return (-1);
+		else if (sign == -1 && prev < n)
+			return (0);
+		s++;
+	}
+	return (n);
+}
+
+// #include <stdio.h>
+// int main()
+// {
+// 	const char c[] = "-777777777777777";
+// 	printf("%d\n", ft_atoi(c));
+// 	printf("%d\n", atoi(c));
+// 	return(0);
+// }
