@@ -1,7 +1,5 @@
 NAME = libft.a
 
-
-
 SRC	=	ft_atoi.c \
 		ft_bzero.c \
 		ft_calloc.c \
@@ -35,10 +33,21 @@ SRC	=	ft_atoi.c \
 		ft_putendl_fd.c \
 		ft_putnbr_fd.c \
 		ft_itoa.c \
-		ft_split.c \
+		ft_split.c
+
+SRCb = ft_lstnew_bonus.c\
+	   ft_lstadd_front_bonus.c\
+	   ft_lstadd_back_bonus.c\
+	   ft_lstsize_bonus.c\
+	   ft_lstlast_bonus.c\
+	   ft_lstclear_bonus.c\
+	   ft_lstdelone_bonus.c\
+	   ft_lstiter_bonus.c\
+	   ft_lstmap_bonus.c
 
 HEADER	=	libft.h
 OBJ = $(SRC:%.c=%.o)
+OBJb = $(SRCb:%.c=%.o)
 
 CC	=	gcc
 CFLAGS = -Wall -Wextra -Werror -I$(HEADER)
@@ -47,21 +56,21 @@ CFLAGS = -Wall -Wextra -Werror -I$(HEADER)
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-
 $(NAME):	$(OBJ) $(HEADER)
 	ar rcs $(NAME) $?
 
 %.o : %.c $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
 
+bonus: all $(OBJb)
+	make OBJ="$(OBJb)" all
 
 clean:
 	@rm -f $(OBJ)
-	@echo "OBJ deleted"
+	@rm -f $(OBJb)
 
 fclean: clean
-	@$(RM) $(NAME)
+	@rm -f $(NAME)
 	@echo "$(NAME) deleted"
 
 re: fclean all
